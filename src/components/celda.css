@@ -1,0 +1,8 @@
+.celda {
+  display: inline-block;
+  width: 9%;
+  height: 10%;
+  border: 1px solid purple;
+  margin: 0;
+  padding: 0;
+}
