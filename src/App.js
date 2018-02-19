@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Board from './components/board';
 
-/* Hay una relación entre alto, ancho y las celdas ocupadas, la cantidad de celdas ocupadas y las posiciones de las mismas deben estar dentro del tablero, deben respetar las dimensiones dadas del tablero */
+/* The position of the occupied cells must belong to the board, must be between the limits of the board */
 class App extends Component {
   constructor(props) {
     super(props);
@@ -13,31 +13,31 @@ class App extends Component {
     }
   }
 
-// necesitaría usar algo como celdaOcupada que está en board, la tendría que subir a Apps y pasarla como props para que la use board...
-// cuando aprenda cómo hacerlo bien, ok, por ahora, horror, repito el código
+// Also the Board component uses methods celdaOfupada(f,c) and esLaPosicion()
+// which are similar to those used here in App. The difference is in the use of this.state and this.props.
+// If they take an array of occupied cells instead of looking into this.state.ocupadas or this.props.ocupadas,
+// then maybe I can pass the methods used in App to Board as props...
 
-celdaOcupada(f,c){
-    // Las celdas ocupadas están en this.props.ocupadas
-    // Buscás si x,y está en this.props.ocupadas
+  // f is the row number, c is the column number
+  celdaOcupada(f,c){
     let res = false;
     let index = 0;
     let tope = this.state.ocupadas.length
-      // es decir, mientras index sea menor que tope y la actual no sea la x,y, seguí
+
     while (index < tope && !this.esLaPosicion(index,f,c)){
       index++;
     }
     if (index < tope) {
-      // La encontró
+      // Found it
       res = true;
     }
     return res;
   }
 
- esLaPosicion(index, f, c){
+  // f is the row number, c is the column number
+  esLaPosicion(index, f, c){
     return this.state.ocupadas[index].f === f && this.state.ocupadas[index].c === c;
   }
-
-// Acá, según las reglas, se van a ir actualizando las celdas ocupadas.
 
   nextStage() {
     let newFull = [];
@@ -46,12 +46,13 @@ celdaOcupada(f,c){
         let neighbs = this.fullNeighbours(f,c);
         if (this.celdaOcupada(f,c)){
           if (neighbs === 2 || neighbs === 3){
-             // queda llena, la incluyo en newFull
+             // remains full, include it in newFull
              newFull.push({f: f, c: c });
           }
         } else {
-          // celda vacía
+          // if the cell is empty then
           if (neighbs === 3){
+            // mark it as full, a newborn cell will arrive
             newFull.push({f: f, c: c });  
           }
         }
@@ -60,20 +61,17 @@ celdaOcupada(f,c){
     this.setState({ocupadas: newFull});
   }
 
-// Está calculando mal esto:
+  // f is the row number, c is the column number
   fullNeighbours(f,c) {
-    // Para cada vecino, si está dentro del tablero, si está lleno sumar uno
+    // Count the number of full neighbours of (f,c)
     let count = 0;
     const ngbrs = this.vecinos(f,c);
-    // No funcionó usar: for (let n in ngbrs), tuve que usar la forma larga del for loop
     let tope = ngbrs.length;
     for (let i = 0; i < tope; i++){
-      // alert(ngbrs[i].f + ', ' + ngbrs[i].c)
       if (this.isOnTheBoard(ngbrs[i]) && this.celdaOcupada(ngbrs[i].f, ngbrs[i].c)){
         count++;
       }
     }
-    // alert('Vecinos ocupados de ' + f + ', ' + c + ': ' + count);
     return count;
   }
 
@@ -85,10 +83,9 @@ celdaOcupada(f,c){
            ]
   }
 
+  // pos is of the form: {f: Number, c: Number}, where f represents row and c, column.
   isOnTheBoard(pos){
-    // alert('Viendo si ' + pos.f + ', ' + pos.c + ' está en el tablero');
     let res = pos.c >= 0 && pos.c < this.state.boardWidth && pos.f >= 0 && pos.f < this.state.boardHeight;
-    // alert(res);
     return res;
   }
 
