@@ -6,9 +6,9 @@ class Celda extends Component {
     let content = (this.props.full) ? '*' : this.props.position;
 
     return (
-      <div className="celda">
+      <button className="celda">
       {content}
-      </div>
+      </button>
       )
   }
 }

@@ -43,7 +43,7 @@ class Board extends Component {
               {
                 filas.map((fila, f) => {
                   return (
-                    <div key={f}> {fila}</div>
+                    <div className="fila" key={f}> {fila}</div>
                   );
                 })
               }

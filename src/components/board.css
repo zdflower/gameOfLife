@@ -1,4 +1,4 @@
-.board {
+/* .board {
   position: absolute;
   top: 10%;
   left: 22%;
@@ -8,4 +8,9 @@
   padding: 0;
   width: 56%;
   height: 100%;
+}*/
+
+.fila {
+  margin:0;
+  padding:0;
 }

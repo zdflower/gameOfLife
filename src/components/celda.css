@@ -1,8 +1,9 @@
 .celda {
-  display: inline-block;
-  width: 9%;
-  height: 10%;
+  width: 40px;
+  height: 40px;
   border: 1px solid purple;
-  margin: 0;
+}
+
+button.celda {
   padding: 0;
 }
