@@ -9,56 +9,78 @@ class App extends Component {
     this.state = {
       boardWidth: this.props.nmbrOfCols,
       boardHeight: this.props.nmbrOfRows,
-      ocupadas: this.props.ocupadas
+      board : this.props.board
     }
   }
 
-// Also the Board component uses methods celdaOfupada(f,c) and esLaPosicion()
-// which are similar to those used here in App. The difference is in the use of this.state and this.props.
-// If they take an array of occupied cells instead of looking into this.state.ocupadas or this.props.ocupadas,
-// then maybe I can pass the methods used in App to Board as props...
 
-  // f is the row number, c is the column number
-  celdaOcupada(f,c){
-    let res = false;
-    let index = 0;
-    let tope = this.state.ocupadas.length
+  
+/* 
+¿Qué se mejora y qué se complica si represento el tablero como un array de filas, donde fila es un array de booleanos, cada uno indicando si la celda está ocupada o no?
 
-    while (index < tope && !this.esLaPosicion(index,f,c)){
-      index++;
-    }
-    if (index < tope) {
-      // Found it
-      res = true;
-    }
-    return res;
-  }
+No va a hacer falta "ocupadas", y para ver si la celda (x,y) está ocupada sólo tengo que ver tablero[x][y]
 
-  // f is the row number, c is the column number
-  esLaPosicion(index, f, c){
-    return this.state.ocupadas[index].f === f && this.state.ocupadas[index].c === c;
-  }
+*/
 
+/*
+Problemas a partir de usar un array de filas como board:
+
+- undefined si no uso slice() cuando paso el board de index.js a App
+- cuando quiero modificar una celda en particular, modifica toda una columna, la misma columna en todas las filas.
+
+ */
+
+
+/* nextStage()
+
+Revisar y comparar con cómo definía las reglas antes, ya que estaba bien, mientras que ahora está mal.
+
+  Antes: 
+
+-        if (this.celdaOcupada(f,c)){
+-          if (neighbs === 2 || neighbs === 3){
+-             // remains full, include it in newFull
+-             newFull.push({f: f, c: c });
+-          }
+
+  Que sería equivalente a:
+
+          if (board[f][c]){
+          if (neighbs === 2 || neighbs === 3){
+             board[f][c] = true;
+          } 
+  
+  Ahora:
+
+          if (board[f][c]){
+          if (neighbs < 2 || neighbs > 3){
+             board[f][c] = false;
+          } 
+
+  ¿Qué estoy perdiendo de vista? ¿Qué cambió?
+
+ */ 
   nextStage() {
-    let newFull = [];
+    console.error(this.state.board);
+    let board = this.state.board.slice();
     for (let f = 0; f < this.state.boardHeight; f++){
       for (let c = 0; c < this.state.boardWidth; c++) {
         let neighbs = this.fullNeighbours(f,c);
-        if (this.celdaOcupada(f,c)){
-          if (neighbs === 2 || neighbs === 3){
-             // remains full, include it in newFull
-             newFull.push({f: f, c: c });
-          }
+        if (board[f][c]){
+          if (neighbs < 2 || neighbs > 3){
+             board[f][c] = false;// esto no hace lo que se supone que debería, que es sólo modificar la celda ubicada en la fila f y la columna c.
+          /* Me parece que descubrí el problema: no está acá, si no en cómo creé el array de arrays, parece que todas las filas son la misma fila, todas apuntan a la misma memoria, entonces si modifico una fila, modifico también las otras. ¿A quién se le ocurre que esto funcione así? ¿En qué caso podría ser útil? */
+          } 
         } else {
           // if the cell is empty then
           if (neighbs === 3){
             // mark it as full, a newborn cell will arrive
-            newFull.push({f: f, c: c });  
+             board[f][c] = true;
           }
         }
       }
     }
-    this.setState({ocupadas: newFull});
+    this.setState({board: board});
   }
 
   // f is the row number, c is the column number
@@ -68,7 +90,7 @@ class App extends Component {
     const ngbrs = this.vecinos(f,c);
     let tope = ngbrs.length;
     for (let i = 0; i < tope; i++){
-      if (this.isOnTheBoard(ngbrs[i]) && this.celdaOcupada(ngbrs[i].f, ngbrs[i].c)){
+      if (this.isOnTheBoard(ngbrs[i]) && this.state.board[ngbrs[i].r][ngbrs[i].c]){
         count++;
       }
     }
@@ -77,23 +99,23 @@ class App extends Component {
 
   vecinos(row,col){
     return [
-            {f: row-1, c: col-1}, {f: row-1, c: col}, {f: row-1, c: col+1},
-            {f: row, c: col-1}, {f: row, c: col+1},
-            {f: row+1, c: col-1}, {f: row+1, c: col},{f: row+1, c: col+1}
+            {r: row-1, c: col-1}, {r: row-1, c: col}, {r: row-1, c: col+1},
+            {r: row, c: col-1}, {r: row, c: col+1},
+            {r: row+1, c: col-1}, {r: row+1, c: col},{r: row+1, c: col+1}
            ]
   }
 
-  // pos is of the form: {f: Number, c: Number}, where f represents row and c, column.
+  // pos is of the form: {r: Number, c: Number}, where r represents row and c, column.
   isOnTheBoard(pos){
-    let res = pos.c >= 0 && pos.c < this.state.boardWidth && pos.f >= 0 && pos.f < this.state.boardHeight;
+    let res = pos.c >= 0 && pos.c < this.state.boardWidth && pos.r >= 0 && pos.r < this.state.boardHeight;
     return res;
   }
 
   render() {
     return (
       <div className="App">
-        <Board ocupadas={this.state.ocupadas} width={this.state.boardWidth} height={this.state.boardHeight} />
-        <button onClick={() => {return this.nextStage()}}>Next stage</button>
+        <Board board={this.state.board} />
+        <button onClick={() => this.nextStage()}>Next stage</button>
       </div>
     );
   }

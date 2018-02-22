@@ -4,41 +4,26 @@ import './board.css';
 
 class Board extends Component {
 
-  esLaPosicion(index, f, c){
-    return this.props.ocupadas[index].f === f && this.props.ocupadas[index].c === c;
-  }
-
-  celdaOcupada(f,c){
-    let res = false;
-    let index = 0;
-    let tope = this.props.ocupadas.length
-    while (index < tope && !this.esLaPosicion(index,f,c)){
-      index++;
-    }
-    if (index < tope) {
-      res = true;
+  filas(){
+    let res = [];
+    for (let i = 0; i < this.props.board.length; i++) {
+      res.push(this.fila(i,this.props.board[0].length));
     }
     return res;
-  }
-
-  filas(f,c){
-      let res = [];
-      for (let i = 0; i < f; i++) {
-        res.push(this.fila(i,c));
-      }
-      return res;
   }
 
   fila(i, c){
     let res = [];
     for (let j = 0; j < c; j++) {
-      res.push(<Celda key={j + ', ' + c} full={this.celdaOcupada(i,j)} position={ "(" + i + ", " + j + ")"} />);
+      res.push(<Celda key={j + ', ' + c} full={this.props.board[i][j]} position={ "(" + i + ", " + j + ")"} />);
     } 
     return res;
   }
 
   render() {
-    let filas = this.filas(this.props.height, this.props.width); 
+    // this.props.board.length es la cantidad de filas en el tablero.
+    // this.props.board[0].length es la cantidad de columnas de una fila 
+    let filas = this.filas(); 
     return ( <div className="board">
               {
                 filas.map((fila, f) => {
