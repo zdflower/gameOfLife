@@ -9,7 +9,8 @@ class App extends Component {
       boardWidth: this.props.nmbrOfCols,
       boardHeight: this.props.nmbrOfRows,
       board : this.props.board,
-      history: []
+      history: [],
+      stage: 0
     }
   }
 
@@ -48,7 +49,7 @@ class App extends Component {
         }
       }
     }
-    this.setState({board: board, history: history});
+    this.setState({board: board, history: history, stage: this.state.stage + 1});
   }
 
   // f is the row number, c is the column number
@@ -87,6 +88,7 @@ class App extends Component {
     return (
       <div className="App">
         <h3>Actual Board</h3>
+        <h4>Stage {this.state.stage}</h4>
         <Board board={this.state.board}/>
         <button onClick={() => this.nextStage()}>Next stage</button>
         <h3>Previous Board</h3>
