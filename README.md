@@ -42,6 +42,12 @@ In the "boardRepresentation" branch the board is represented by an array of arra
 
 The app shows the actual and the previous boards, when you advance a stage.
 
+"Celdas" branch: The style of the cells and the board has been improved a bit.
+
+"SeedsAlAzar" branch: It generates an inicial board with a ranmdom seed.
+
+I will merge the branches in the near future after a little more testing.
+
 ## References
 
 * [Conway's game of life by himself](https://www.youtube.com/watch?v=E8kUJL04ELA) youtube video

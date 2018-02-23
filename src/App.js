@@ -56,15 +56,9 @@ class App extends Component {
     // Count the number of full neighbours of (f,c)
     let count = 0;
     const ngbrs = this.vecinos(f,c);
-    // console.error("Vecinos de (" + f + ", " + c + "): ");
-    // console.error(ngbrs);
     let tope = ngbrs.length;
-    /* ¿Por qué no usé un while loop? */
     for (let i = 0; i < tope; i++){
-      // console.error(ngbrs[i].r + ", " + ngbrs[i].c + " está en el tablero?: " + this.isOnTheBoard(ngbrs[i]));
-      // if (ngbrs[i].r === 0 && ngbrs[i].c === 2){console.error(ngbrs[i].r + ", " + ngbrs[i].c + " está lleno?: " + this.state.board[ngbrs[i].r][ngbrs[i].c]);}
       if (this.isOnTheBoard(ngbrs[i]) && this.state.board[ngbrs[i].r][ngbrs[i].c]){
-        // console.error(ngbrs[i].r + ", " + ngbrs[i].c + " está lleno?: " + this.state.board[ngbrs[i].r][ngbrs[i].c]);
         count++;
       }
     }
