@@ -10,7 +10,14 @@
   height: 100%;
 }*/
 
-.fila {
+board { 
   margin:0;
   padding:0;
 }
+
+div.fila {
+  margin:0;
+  padding:0;
+  line-height: 0;
+}
+/* Era el line-height que le daba una especie de margen a cada fila */

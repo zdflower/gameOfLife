@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react';+
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-let initialBoardWidth = 6;
-let initialBoardHeight = 6;
+let initialBoardWidth = 30;
+let initialBoardHeight = 20;
 
 // eslint-disable-next-line
 let oscilator = [{r: 1, c: 2}, {r: 2, c: 2}, { r: 3, c: 2}];
@@ -22,7 +22,26 @@ let something = [{r: 0, c: 2}, {r: 1, c: 2}, { r: 2, c: 2}, { r: 3, c: 1}, { r: 
   while something disappears...
 */
 
-let seed = something;
+// Voy a escribir una función para generar una celda al azar, que esté dentro del tablero, para incluirla en un seed.
+// Toma la cantidad de filas y columnas del tablero y devuelve un {r: Number, c: Number} donde 0 <= r < rows y 0 <= c < cols
+function celdaAlAzar(rows, cols) {
+  return {r: getRndmNbr(rows - 1, cols), c: getRndmNbr(rows - 1, cols)}
+}
+
+/* https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Math/random */
+function getRndmNbr(min, max) {
+  // min incluido, max excluido
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+// Ideas para generar seeds al azar:
+// ¿Cómo hago para generar las seeds a partir de esto? Por ejemplo decidir que cierto porcentaje del tablero va a estar lleno, y a partir de calcular cuántas celdas sería ese porcentaje obtener al azar las celdas llenas, (no hacer problema si se generara alguna celda repetida, resultando en menos celdas llenas)
+
+// ¿Podría hacerlo de otra manera, por ejemplo recorrer cada posible celda del tablero y decidir al azar si está llena o no? ¿Toda celda tendrá la misma chance? ¿Hago que sea más probable que salga vacía a que salga llena?
+// Se podría hacer al mismo tiempo que se genera el nuevo tablero, en vez de recibir seed, dentro de fila se decide al azar si va a estar llena o no
+
+
+let seed = glider;
 const board = newBoard(initialBoardHeight, initialBoardWidth, seed);
 
 function newBoard(rows,cols,seed) {

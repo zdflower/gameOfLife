@@ -1,9 +1,13 @@
 .celda {
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   border: 1px solid purple;
 }
 
-button.celda {
+.celda {
   padding: 0;
+}
+
+.full {
+  background-color: purple;
 }
