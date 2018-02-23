@@ -36,6 +36,12 @@ From [https://www.freecodecamp.org/challenges/build-the-game-of-life](https://ww
 
 At the time, there is a predefined seed set in src/index.js, and a button in the page that you can click to see the next state of the board.
 
+### 2018-02-23
+
+In the "boardRepresentation" branch the board is represented by an array of arrays. Be careful with making copies of those beasts! ()
+
+The app shows the actual and the previous boards, when you advance a stage.
+
 ## References
 
 * [Conway's game of life by himself](https://www.youtube.com/watch?v=E8kUJL04ELA) youtube video
