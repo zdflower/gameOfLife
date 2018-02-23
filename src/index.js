@@ -1,4 +1,4 @@
-import React from 'react';+
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -7,6 +7,7 @@ import registerServiceWorker from './registerServiceWorker';
 let initialBoardWidth = 30;
 let initialBoardHeight = 20;
 
+/* 
 // eslint-disable-next-line
 let oscilator = [{r: 1, c: 2}, {r: 2, c: 2}, { r: 3, c: 2}];
 
@@ -17,6 +18,7 @@ let glider = [{r: 2, c: 4}, {r: 3, c: 4}, { r: 4, c: 4}, { r: 4, c: 3}, { r: 3, 
 let glider_other = [{r: 3, c: 2}, {r: 1, c: 2}, { r: 2, c: 2}, { r: 3, c: 1}, { r: 2, c: 0}];
 
 let something = [{r: 0, c: 2}, {r: 1, c: 2}, { r: 2, c: 2}, { r: 3, c: 1}, { r: 2, c: 0}];
+*/
 
 /* glider evolves into a block at the right down corner,
   while something disappears...
@@ -24,9 +26,9 @@ let something = [{r: 0, c: 2}, {r: 1, c: 2}, { r: 2, c: 2}, { r: 3, c: 1}, { r: 
 
 // Voy a escribir una función para generar una celda al azar, que esté dentro del tablero, para incluirla en un seed.
 // Toma la cantidad de filas y columnas del tablero y devuelve un {r: Number, c: Number} donde 0 <= r < rows y 0 <= c < cols
-function celdaAlAzar(rows, cols) {
-  return {r: getRndmNbr(rows - 1, cols), c: getRndmNbr(rows - 1, cols)}
-}
+// function celdaAlAzar(rows, cols) {
+//  return {r: getRndmNbr(rows - 1, cols), c: getRndmNbr(rows - 1, cols)};
+// }
 
 /* https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Math/random */
 function getRndmNbr(min, max) {
@@ -41,9 +43,10 @@ function getRndmNbr(min, max) {
 // Se podría hacer al mismo tiempo que se genera el nuevo tablero, en vez de recibir seed, dentro de fila se decide al azar si va a estar llena o no
 
 
-let seed = glider;
-const board = newBoard(initialBoardHeight, initialBoardWidth, seed);
+//let seed = glider;
+//const board = newBoard(initialBoardHeight, initialBoardWidth, seed);
 
+/*
 function newBoard(rows,cols,seed) {
   let board = [];
   // inicializar el tablero, todo false
@@ -64,6 +67,27 @@ function fila(cols){
   }
   return fila;
 }
+*/ 
+
+function newBoard(rows,cols) {
+  let board = [];
+  // inicializar el tablero, todo false
+  for (let i=0; i< rows; i++){
+    board.push(fila(cols));
+  }
+  return board;
+}
+
+function fila(cols){
+  let fila = [];
+  for (let c = 0; c < cols; c++){
+    // acá decidir si es false o no, al azar
+    (getRndmNbr(0, 2) === 1) ? fila.push(true) : fila.push(false);
+  }
+  return fila;
+}
+
+const board = newBoard(initialBoardHeight, initialBoardWidth);
 
 ReactDOM.render(<App nmbrOfCols={initialBoardWidth} nmbrOfRows={initialBoardHeight} board={board.slice()}/>, document.getElementById('root'));
 registerServiceWorker();
