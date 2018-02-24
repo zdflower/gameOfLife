@@ -1,14 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './celda.css';
 
-class Celda extends Component {
-  render() {
-    let style= (this.props.full) ? {'background-color': 'purple'} : {};
+function Celda(props) {
+    let style= (props.full) ? {'backgroundColor': 'purple'} : {};
     return (
-      <button className="celda" style={style}>
+      <button onClick={props.onClick} className="celda" style={style}>
       </button>
       )
-  }
 }
 
 export default Celda;

@@ -80,16 +80,23 @@ class App extends Component {
     return res;
   }
 
+  handleClickCell(r,c) {
+    let board = this.state.board.slice();
+    board[r][c] = !board[r][c];
+    this.setState({board: board});
+  }
+
   render() {
     let prev = [];
     if (this.state.history.length > 0) {
-      prev = <Board board={this.state.history[this.state.history.length - 1]}/>;
+      // le paso un onClick que no hace nada porque el prev no se debe modificar.
+      prev = <Board onClick={() => {return}} board={this.state.history[this.state.history.length - 1]}/>;
     }
     return (
       <div className="App">
         <h3>Actual Board</h3>
         <h4>Stage {this.state.stage}</h4>
-        <Board board={this.state.board}/>
+        <Board onClick={(r,c) => this.handleClickCell(r,c)} board={this.state.board}/>
         <button onClick={() => this.nextStage()}>Next stage</button>
         <h3>Previous Board</h3>
         {prev}

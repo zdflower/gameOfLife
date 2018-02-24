@@ -18,7 +18,7 @@ class Board extends Component {
   fila(board, i, c){
     let res = [];
     for (let j = 0; j < c; j++) {
-      res.push(<Celda key={j + ', ' + c} full={board[i][j]} position={ "(" + i + ", " + j + ")"} />);
+      res.push(<Celda onClick={() => this.props.onClick(i,j)} key={j + ', ' + c} full={board[i][j]} position={ "(" + i + ", " + j + ")"} />);
     } 
     return res;
   }
