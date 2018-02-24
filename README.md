@@ -48,6 +48,12 @@ The app shows the actual and the previous boards, when you advance a stage.
 
 I will merge the branches in the near future after a little more testing.
 
+### 2018-02-24
+
+It shows the number of stages passed.
+
+You can click on the cells of the board to turn them on or off.
+
 ## References
 
 * [Conway's game of life by himself](https://www.youtube.com/watch?v=E8kUJL04ELA) youtube video
