@@ -28,7 +28,7 @@ From [https://www.freecodecamp.org/challenges/build-the-game-of-life](https://ww
 * [ ] I can set up the board.
 * [ ] I can clear the board.
 * [ ] When I press start, the game will play out.
-* [ ] Each time the board changes, I can see how many generations have gone by.
+* [x] Each time the board changes, I can see how many generations have gone by.
 
 ## State of this project
 
