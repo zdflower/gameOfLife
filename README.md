@@ -23,11 +23,11 @@ The rules are:
 
 From [https://www.freecodecamp.org/challenges/build-the-game-of-life](https://www.freecodecamp.org/challenges/build-the-game-of-life)
 
-* [ ] When I first arrive at the game, it will randomly generate a board and start playing.
-* [ ] I can start and stop the board.
+* [x] When I first arrive at the game, it will randomly generate a board and start playing.
+* [x] I can start and stop the board.
 * [x] I can set up the board.
 * [x] I can clear the board.
-* [ ] When I press start, the game will play out.
+* [x] When I press start, the game will play out.
 * [x] Each time the board changes, I can see how many generations have gone by.
 
 ## State of this project
@@ -58,10 +58,19 @@ You can click on the cells of the board to turn them on or off.
 
 You can clean the board.
 
-You can set boards of sizes 30x30 and 15x15 cells.
+You can set boards of sizes 30x30 and 15x15 cells, appart from the default of 30x20.
+
+The game starts when you arrive at the page.
+
+You can pause it and make it continue.
+
+It fulfills the user stories.
+
+It needs its style to be improved, though.
 
 ## References
 
 * [Conway's game of life by himself](https://www.youtube.com/watch?v=E8kUJL04ELA) youtube video
 * Wikipedia on [Conway's game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 * I have used [Create React App](https://github.com/facebookincubator/create-react-app) to get started.
+* [State and lifecycle](https://reactjs.org/docs/state-and-lifecycle.html), very useful for making the game play by itself, and then pause and start again.

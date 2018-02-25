@@ -110,10 +110,25 @@ class App extends Component {
     this.setState({board: board, history: [], stage: 0});
   }
 
+  // https://reactjs.org/docs/state-and-lifecycle.html
+  componentDidMount() {
+    this.timerID = setInterval(
+      () => this.tick(),
+      1000
+    );
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.nextStage();
+  }
+
   render() {
     let prev = [];
     if (this.state.history.length > 0) {
-      // le paso un onClick que no hace nada porque el prev no se debe modificar.
       prev = <Board onClick={() => {return}} board={this.state.history[this.state.history.length - 1]}/>;
     }
 
@@ -124,8 +139,8 @@ class App extends Component {
         <Board onClick={(r,c) => this.handleClickCell(r,c)} board={this.state.board}/>
         <button onClick={() => this.nextStage()}>Next stage</button>
         <button onClick={() => this.cleanBoard()}>Clean Board</button>
-        <button>Start</button>
-        <button>Pause</button>
+        <button onClick={() => this.componentDidMount()}>Start</button>
+        <button onClick={() => this.componentWillUnmount()}>Pause</button>
         <div><button onClick={(rows, cols) => this.setBoardSize(30,30)}>30x30</button></div>
         <div><button onClick={(rows, cols) => this.setBoardSize(15,15)}>15x15</button></div>
         <h3>Previous Board</h3>
