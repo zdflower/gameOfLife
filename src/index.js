@@ -9,7 +9,7 @@ let initialBoardHeight = 20;
 
 const board = newBoard(initialBoardHeight, initialBoardWidth);
 
-ReactDOM.render(<App nmbrOfCols={initialBoardWidth} nmbrOfRows={initialBoardHeight} board={board.slice()}/>, document.getElementById('root'));
+ReactDOM.render(<App board={board.slice()}/>, document.getElementById('root'));
 registerServiceWorker();
 
 /* https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Math/random */

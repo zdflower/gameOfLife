@@ -6,8 +6,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      boardWidth: this.props.nmbrOfCols,
-      boardHeight: this.props.nmbrOfRows,
       board : this.props.board,
       history: [],
       stage: 0
@@ -30,8 +28,8 @@ class App extends Component {
     let board = copyBoard(this.state.board); // Copia profunda del board.
     let history = this.state.history.slice(); // En este caso no necesito una copia profunda.
     history.push(copyBoard(board)); // Necesito guardar una copia que quede intacta, por eso hago otra copia profunda.
-    for (let f = 0; f < this.state.boardHeight; f++){
-      for (let c = 0; c < this.state.boardWidth; c++) {
+    for (let f = 0; f < this.state.board.length; f++){
+      for (let c = 0; c < this.state.board[0].length; c++) {
         // console.error("(" + f + ", " + c + ")");
         let neighbs = this.fullNeighbours(f,c);
         // console.error("full: " + this.state.board[f][c] +"\nFull neighbours: " + neighbs);
@@ -76,7 +74,7 @@ class App extends Component {
 
   // pos is of the form: {r: Number, c: Number}, where r represents row and c, column.
   isOnTheBoard(pos){
-    let res = pos.c >= 0 && pos.c < this.state.boardWidth && pos.r >= 0 && pos.r < this.state.boardHeight;
+    let res = pos.c >= 0 && pos.c < this.state.board[0].length && pos.r >= 0 && pos.r < this.state.board.length;
     return res;
   }
 
@@ -86,18 +84,50 @@ class App extends Component {
     this.setState({board: board});
   }
 
+  cleanBoard(){
+    let board = this.state.board.slice(); // copia superficial, por comodidad, igual modifica el board del state.
+    const rows = board.length;
+    const cols = board[0].length; // se supone que board tiene al menos una fila.
+    for (let r = 0; r < rows; r++){
+      for (let c = 0; c < cols; c++){
+        board[r][c] = false;
+      }
+    }
+    this.setState({board: board, history: [], stage: 0});
+  }
+
+// ¿Se podría reescribir de alguna manera como para no repetir tanto código entre cleanBoard, newBoard y setBoardSize?
+// cleanBoard y setBoardSize son casi iguales...
+  setBoardSize(rows, cols){
+    let board = [];
+    for (let r = 0; r < rows; r++){
+      let fila = [];
+      for (let c = 0; c < cols; c++){
+        fila.push(false);
+      }
+      board.push(fila);
+    }
+    this.setState({board: board, history: [], stage: 0});
+  }
+
   render() {
     let prev = [];
     if (this.state.history.length > 0) {
       // le paso un onClick que no hace nada porque el prev no se debe modificar.
       prev = <Board onClick={() => {return}} board={this.state.history[this.state.history.length - 1]}/>;
     }
+
     return (
       <div className="App">
         <h3>Actual Board</h3>
         <h4>Stage {this.state.stage}</h4>
         <Board onClick={(r,c) => this.handleClickCell(r,c)} board={this.state.board}/>
         <button onClick={() => this.nextStage()}>Next stage</button>
+        <button onClick={() => this.cleanBoard()}>Clean Board</button>
+        <button>Start</button>
+        <button>Pause</button>
+        <div><button onClick={(rows, cols) => this.setBoardSize(30,30)}>30x30</button></div>
+        <div><button onClick={(rows, cols) => this.setBoardSize(15,15)}>15x15</button></div>
         <h3>Previous Board</h3>
         {prev}
       </div>
