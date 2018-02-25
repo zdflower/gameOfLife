@@ -54,6 +54,12 @@ It shows the number of stages passed.
 
 You can click on the cells of the board to turn them on or off.
 
+### 2018-02-25
+
+You can clean the board.
+
+You can set boards of sizes 30x30 and 15x15 cells.
+
 ## References
 
 * [Conway's game of life by himself](https://www.youtube.com/watch?v=E8kUJL04ELA) youtube video
