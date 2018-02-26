@@ -2,6 +2,8 @@
 
 Project journal: [part1](https://zdflower.github.io/posts/2018/02/16/Game-of-life-Part-1.html).
 
+Visit: [GameOfLife](https://codepen.io/zdflower/full/mXQbEp/)
+
 ## Description
 
 There is a "board", kind of a set or a matrix of cells. Each cell is either empty (dead) or full (alive), and has neighbours (adyacent cells: up, down, left, right, corners).
